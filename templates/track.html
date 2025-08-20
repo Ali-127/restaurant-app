@@ -1,0 +1,63 @@
+{% extends "base.html" %}
+{% load static %}
+    {% block title %}Delivery tracking{% endblock title %}
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=default"></script>
+  
+  {% block content %}
+  {% include "header.html" %}
+  <!--========== SCROLL TOP ==========-->
+  <a href="#" class="scrolltop" id="scroll-top">
+      <i class='bx bx-chevron-up scrolltop__icon'></i>
+  </a>
+    <section class="contact section map-container" id="contact">
+    <div id="map"></div>
+    </section>
+
+    <section class="contact section orderinfo-container" id="contact">
+    <p><h1>Your order is on the way!</h1></p>
+    </section>
+
+    {% comment %} <!-- <script>
+
+     function initMap() {
+        const directionsRenderer = new google.maps.DirectionsRenderer();
+        const directionsService = new google.maps.DirectionsService();
+        const map = new google.maps.Map(document.getElementById("map"), {
+          zoom: 14,
+          center: { lat: 18.030905 , lng: 79.542875 },
+        });
+
+        directionsRenderer.setMap(map);
+        calculateAndDisplayRoute(directionsService, directionsRenderer);
+        DRIVING.addEventListener("change", () => {
+          calculateAndDisplayRoute(directionsService, directionsRenderer);
+        });
+      }
+
+      function calculateAndDisplayRoute(directionsService, directionsRenderer) {
+        const selectedMode = "DRIVING" //document.getElementById("mode").value;
+
+        directionsService
+          .route({
+            origin: { lat: 18.030905, lng: 79.542875 },
+            destination: { lat:17.99231667131914 , lng:79.55652413925598 },
+            travelMode: google.maps.TravelMode[selectedMode],
+          })
+          .then((response) => {
+            directionsRenderer.setDirections(response);
+          })
+          .catch((e) => window.alert("Directions request failed due to " + status));
+      }
+
+      // window.alert("The delivery agent is on his way")
+      </script> --> {% endcomment %}
+      {% include "footer.html" %}
+      {% endblock content %}
+{% block extra_js %}
+  <script src="{% static 'styles/js/track.js' %}"></script>
+  <!-- Async script executes immediately and must be after any DOM elements used in callback. -->
+  <script
+    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyB41DRUbKWJHPxaFjMAwdrzWzbVKartNGg&callback=initMap&v=weekly&channel=2"
+    async>
+  </script>
+{% endblock extra_js %}

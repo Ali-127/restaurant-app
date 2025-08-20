@@ -1,0 +1,61 @@
+{% extends "base.html" %}
+{% load static %}
+	{% block title %}CART{% endblock title %}
+	{% block extra_css_script %}<link rel="stylesheet" type="text/css" href="{% static 'styles/css/style-cart.css' %}">
+	<link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700,900" rel="stylesheet">
+	{% endblock extra_css_script %}
+{% block content %}
+<div class="CartContainer">
+	<div class="Header">
+	<h3 class="Heading">Cart</h3>
+	<a href="{% url 'menu' %}" class = "back"><h5 class="Action">Back to Menu <i class='bx bxs-food-menu'></i></h5></a>
+	</div>
+
+	{% comment %} {% for selected_item in selected_items %} {% endcomment %}
+	<div class="Cart-Items">
+		
+		<div class="image-box">
+		{% comment %} <img src="{{ url_for('static', filename = 'styles/img/'+selected_item.source) }}" alt="" class="menu__img"> {% endcomment %}
+		Not implemented yet.
+		</div>
+
+		<div class="about">
+		{% comment %} <h1 class="title"> {{ selected_item.name }}</h1>
+		<h3 class="subtitle"> {{ selected_item.description }} </h3> {% endcomment %}
+		</div>
+
+		<div class="counter">
+		<div class="btn">+</div>
+		<div class="count">1</div>
+		<div class="btn">-</div>
+		</div>
+
+		<div class="prices">
+		{% comment %} <div class="amount">₹ {{ selected_item.price }}</div> {% endcomment %}
+		<div class="remove"><i class='bx bxs-trash-alt'></i></div> 
+		</div>
+	
+	</div>
+	{% comment %} {% endfor %} {% endcomment %}
+
+	<!-- <hr> -->
+	<div class="checkout">
+		<div class="total">
+			<div>
+				<div class="Subtotal">Sub-Total</div>
+				<div class="items"> X items</div>
+			</div>
+			{% comment %} <div class="total-amount">₹ {{ selected_items | sum(attribute='price') }}</div> {% endcomment %}
+		</div>
+		<form method = 'POST'>
+			<!-- Note: This part seems useless -->
+			{% comment %} {{ order_form.hidden_tag() }} {% endcomment %}
+			{% comment %} {% for selected_item in selected_items %} {% endcomment %}
+			{% comment %} <input id="ordered_item" name="ordered_item" type="hidden" value="{{ selected_item.name }}"> {% endcomment %}
+			{% comment %} {% endfor %} {% endcomment %}
+			{% comment %} {{ order_form.submit(class = 'button') }} {% endcomment %}
+			not implemented yet.
+		</form>
+	</div>
+</div>
+{% endblock content %}

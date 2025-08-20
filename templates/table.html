@@ -1,0 +1,53 @@
+{% extends "base.html" %}
+{% load static %}
+{% block title %}Table Reservation{% endblock title %}
+{% block content %}
+{% include "header.html" %}
+<!--========== SCROLL TOP ==========-->
+<a href="#" class="scrolltop" id="scroll-top">
+  <i class='bx bx-chevron-up scrolltop__icon'></i>
+</a>
+
+<section class="menu section bd-container" id="menu">
+
+<h1 class="section-title"> Available Tables </h1>
+
+</section>
+
+<!-- TABLE STARTS -->
+<table>
+  <thead id="table-header">
+    <tr>
+        <th>Table</th>
+        <th>Time</th>
+        <th>Date</th>
+        <th>Accomodation</th>
+        <th></th>
+    </tr>
+    </thead>
+    
+    <tbody>
+    {% comment %} {% for table in tables %}
+        <tr>
+            <td>{{ table.table }}</td>
+            <td>{{ table.time }}</td>
+            <td>{{ table.date }}</td>
+            <td>{{ table.accomodation }}</td>
+            <td>
+                <!-- <a href ='#' class = 'button'>Reserve</a> -->
+                <form method = 'POST'>
+                    {{ reserve_form.hidden_tag() }}
+                    <input id="reserved_table" name="reserved_table" type="hidden" value="{{ table.table }}">
+                    {{ reserve_form.submit(class = 'button') }}
+                </form>
+            </td>
+        </tr>
+    {% endfor %} {% endcomment %}
+    <tr>
+        <td>Not implmented yet.</td>
+    </tr>
+    </tbody>
+</table>
+<!-- TABLE ENDS -->
+{% include "footer.html" %}
+{% endblock content %}

@@ -1,0 +1,30 @@
+{% extends "base.html" %}
+{% load static %}
+{% block extra_css_script %}
+  <script
+    src="https://kit.fontawesome.com/64d58efce2.js"
+    crossorigin="anonymous"
+  ></script>
+  <link rel= "stylesheet" type= "text/css" href= "{% static 'styles/css/style-otp.css' %}">
+{% endblock extra_css_script %}
+  {% block title %}OTP FORM{% endblock title %}
+
+{% block content %}
+  <div class="container">
+    <div class="form-container">
+      <form action="/verify" accept-charset="UTF-8" method="post" class="otp-form">
+        <h2 class="title">Enter OTP</h2>
+        <div class="input-field">
+          <i class="fas fa-mobile-alt"></i>
+          <input name="token" id="token" placeholder="OTP"></select>
+        </div>
+          <!-- RESEND OTP -->
+          <div class='resend'>
+            <h4 class="resend-otp"><a href = "{% url 'otp' %}" action="#" class="ro-link">Resend OTP</a></h4>
+          </div>
+          <!-- RESEND OTP ENDS -->
+        <input type="submit" value="Verify" class="btn solid" />
+      </form>
+    </div>
+  </div>
+  {% endblock content %}

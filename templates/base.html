@@ -1,0 +1,27 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+        <!--========== BOX ICONS ==========-->
+        <link href='https://cdn.jsdelivr.net/npm/boxicons@2.0.5/css/boxicons.min.css' rel='stylesheet'>
+        
+        <!--========== CSS ==========-->
+        <link rel="stylesheet" type="text/css" href="{% static 'styles/css/styles.css' %}">
+        {% block extra_css_script %}{% endblock %}
+        <title>{% block title %}{% endblock %}</title>
+    </head>
+    <body>
+        {% block content %}
+        {% endblock %}
+        <!--========== SCROLL REVEAL ==========-->
+        <script src="https://unpkg.com/scrollreveal"></script>
+
+        <!--========== MAIN JS ==========-->
+        <script src="{% static 'styles/js/main.js' %}"></script>
+        {% block extra_js %}
+        {% endblock %}
+    </body>
+</html>

@@ -28,6 +28,7 @@ router.register(r'menus-items', MenuItemViewSet)
 router.register(r'reservations', ReservationViewSet)
 
 urlpatterns = [
+    path('', include('restaurant.urls')),  # include restaurant urls
     path('admin/', admin.site.urls),
     path('api/', include(router.urls)),
     path('api/token/', TokenObtainPairView.as_view(), name='token_obtain_pair'),

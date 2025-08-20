@@ -1,0 +1,58 @@
+{% extends "base.html" %}
+{% load static %}
+{% block extra_css_script %}
+  <script
+    src="https://kit.fontawesome.com/64d58efce2.js"
+    crossorigin="anonymous"
+  ></script>
+  <link rel="stylesheet" type="text/css" href="{% static 'styles/css/style-login.css' %}">
+  {% endblock extra_css_script %}
+  {% block title %}Delivery Tracking{% endblock title %}
+  {% comment %} {% with messages = get_flashed_messages(with_categories=true) %}
+    {% if messages %}
+      <ul class=flashes>
+      {% for category, message in messages %}
+        <li class="{{ category }}">{{ message }}</li>
+      {% endfor %}
+      </ul>
+    {% endif %}
+  {% endwith %} {% endcomment %}
+{% block content %}
+{% include "header.html" %}
+  <div class="container">
+    <div class="forms-container">
+      <div class="signin-signup">
+
+        <form method = "POST" action="#" class="sign-in-form">
+          {% comment %} {{ orderid.hidden_tag() }} {% endcomment %}
+          <h2 class="title">Delivery Tracking</h2>
+          <div class="input-field">
+            <i class="fas fa-user"></i>
+            {% comment %} {{ orderid.orderid(placeholder = "Order ID")}} {% endcomment %}
+          </div>
+
+          {% comment %} {{ orderid.submit(class = 'btn solid') }} {% endcomment %}
+        </form>
+      </div>
+    </div>
+
+    <div class="panels-container">
+      <div class="panel left-panel">
+        <div class="content">
+          <h3>Forgot your Order ID?</h3>
+          <p>
+            Check your Orders history.
+          </p>
+          <button class="btn transparent" id="sign-up-btn">
+            Your Orders
+          </button>
+        </div>
+        <img src="static/styles/img/ontheway.svg" class="image" alt="" />
+      </div>
+    </div>
+  </div>
+  {% include "footer.html" %}
+{% endblock content %}
+{% block extra_js %}
+  <script src="static/styles/js/login.js"></script>
+{% endblock extra_js %}
