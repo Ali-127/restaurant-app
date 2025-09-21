@@ -14,101 +14,12 @@
     <div class="container">
       <div class="forms-container">
         <div class="signin-signup">
-
-          <!-- LOGIN FORM -->
-          <form method = "POST" action="{% url 'login' %}" class="sign-in-form">
-            {% comment %} {{ forml.hidden_tag() }} {% endcomment %}
-            <h2 class="title">Sign in</h2>
-            <div class="input-field">
-              <i class="fas fa-user"></i>
-               <input type="text" placeholder="Username" />
-              {% comment %} {{ forml.username(placeholder = "Username") }} {% endcomment %}
-            </div>
-            <div class="input-field">
-              <i class="fas fa-lock"></i>
-              <input type="password" placeholder="Password" />
-              {% comment %} {{ forml.password(placeholder = "Password") }} {% endcomment %}
-            </div>
-
-            <!-- FORGOT PASSWORD -->
-            <div class='f-password'>
-                <h4 class="forgot-password"><a href="{% url 'forgot' %}" class="fp-link">Forgot Password?</a></h4>
-            </div>
-            <!-- FORGOT PASSWORD ENDS -->
-
-            <input type="submit" value="Login" class="btn solid" />
-            {% comment %} {{ forml.submit(class = 'btn solid') }} {% endcomment %}
-
-            <p class="social-text">Or Sign in with social platforms</p>
-            <div class="social-media">
-              <a href="#" class="social-icon">
-                <i class="fab fa-facebook-f"></i>
-              </a>
-              <a href="#" class="social-icon">
-                <i class="fab fa-twitter"></i>
-              </a>
-              <a href="#" class="social-icon">
-                <i class="fab fa-google"></i>
-              </a>
-              <a href="#" class="social-icon">
-                <i class="fab fa-linkedin-in"></i>
-              </a>
-            </div>
+          <form action="{% url 'login' %}" method="post" class="sign-in-form">
+            {% csrf_token %}
+            <h2 class="title">Sign Up</h2>
+            {{ form_register.as_p }}
+            <input type="submit" value="Sign Up" class="btn">
           </form>
-          <!-- LOGIN FORM ENDS -->
-
-          <!-- REGISTRATION FORM -->
-          <form method = "POST" action="{% url 'register' %}" class="sign-up-form">
-            {% comment %} {{ form.hidden_tag() }} {% endcomment %}
-            <h2 class="title">Sign up</h2>
-
-            <div class="input-field">
-              <i class="fas fa-user"></i>
-              {% comment %} {{ form.username(placeholder = "Username") }} {% endcomment %}
-            </div>
-            <div class="input-field">
-              <i class="fas fa-user"></i>
-              {% comment %} {{ form.fullname(placeholder = "Full Name") }} {% endcomment %}
-            </div>
-            <div class="input-field">
-              <i class="fas fa-map-marker-alt"></i>
-              {% comment %} {{ form.address(placeholder = "Address") }} {% endcomment %}
-            </div>
-            <div class="input-field">
-              <i class="fas fa-mobile-alt"></i>
-              <input type="email" placeholder="Email" />
-              {% comment %} {{ form.phone_number(placeholder = 'Phone Number') }} {% endcomment %}
-            </div>
-            <div class="input-field">
-              <i class="fas fa-lock"></i>
-              <input type="password" placeholder="Password" />
-              {% comment %} {{ form.password1(placeholder = 'Password') }} {% endcomment %}
-            </div>
-            <div class="input-field">
-              <i class="fas fa-lock"></i>
-              <input type="password" placeholder="Confirm Password" />
-              {% comment %} {{ form.password2(placeholder = 'Confirm Password') }} {% endcomment %}
-            </div>
-            <input type="submit" class="btn" value="Sign up" />
-            {% comment %} {{ form.submit(class = 'btn') }} {% endcomment %}
-
-            <p class="social-text">Or Sign up with social platforms</p>
-            <div class="social-media">
-              <a href="#" class="social-icon">
-                <i class="fab fa-facebook-f"></i>
-              </a>
-              <a href="#" class="social-icon">
-                <i class="fab fa-twitter"></i>
-              </a>
-              <a href="#" class="social-icon">
-                <i class="fab fa-google"></i>
-              </a>
-              <a href="#" class="social-icon">
-                <i class="fab fa-linkedin-in"></i>
-              </a>
-            </div>
-          </form>
-          <!-- REGISTRATION FORM ENDS -->
         </div>
       </div>
 
