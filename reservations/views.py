@@ -1,12 +1,18 @@
-from django.shortcuts import render
-from rest_framework import viewsets
-from rest_framework.permissions import IsAuthenticatedOrReadOnly
+from django.shortcuts import render, redirect
+from django.contrib import messages
 from .models import Reservation
-from .serializers import ReservationSerializer
+from .forms import ReservationForm
 
-# Create your views here.
-class ReservationViewSet(viewsets.ModelViewSet):
-    queryset = Reservation.objects.all()
-    serializer_class = ReservationSerializer
-    permission_classes = [IsAuthenticatedOrReadOnly]
+
+def reservation_page(request):
+    if request.method == "POST":
+        form = ReservationForm(request.POST)
+        if form.is_valid():
+            form.save()
+            messages.success(request, 'Reservation created successfully!')
+            return redirect('congrats')
+        else:
+            form = ReservationForm
+            
+        return render(request, 'table.html', {'form': form})
     

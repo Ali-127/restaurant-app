@@ -1,10 +1,7 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
 from django.contrib.auth import login, logout
-from rest_framework import viewsets
-from rest_framework.permissions import IsAuthenticatedOrReadOnly
 from .models import Menu, MenuItem
-from .serializers import MenuSerializer, MenuItemSerializer
 
 # Create your views here.
 def home_page(request):

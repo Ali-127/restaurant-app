@@ -1,5 +1,5 @@
 from django import forms
 
 
-class ReserveForm(forms.Form):
+class ReservationForm(forms.Form):
     pass
