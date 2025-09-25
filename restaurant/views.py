@@ -1,6 +1,6 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
-from django.contrib.auth import login, logout
+from django.contrib.auth import login, logout as django_logout
 from .models import Menu, MenuItem
 
 # Create your views here.
@@ -35,13 +35,25 @@ def track_page(request):
     return render(request, 'track.html')
 
 
-class MenuViewSet(viewsets.ModelViewSet):
-    queryset = Menu.objects.all()
-    serializer_class = MenuSerializer
-    permission_classes = [IsAuthenticatedOrReadOnly]
-    
-class MenuItemViewSet(viewsets.ModelViewSet):
-    queryset = MenuItem.objects.all()
-    serializer_class = MenuItemSerializer
-    permission_classes = [IsAuthenticatedOrReadOnly]
-    
+def login_page(request):
+    if request.method == 'POST':
+        form = AuthenticationForm(request, data=request.POST)
+        if form.is_valid():
+            login(request, form.get_user())
+            return redirect('home')
+    form = AuthenticationForm()
+    return render(request, 'login.html', {'form': form})
+
+def register_page(request):
+    if request.method == 'POST':
+        form = UserCreationForm(request, data=request.POST)
+        if form.is_valid():
+            user = form.save()
+            login(request, user)
+            return redirect('home')
+    form = UserCreationForm()
+    return render(request, "login.html", {'form': form})
+
+def logout_view(request):
+    django_logout(request)
+    return redirect('home')
