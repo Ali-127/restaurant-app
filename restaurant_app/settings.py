@@ -46,7 +46,6 @@ INSTALLED_APPS = [
     'corsheaders',
     'restaurant',
     'reservations',
-    'accounts',
 ]
 
 MIDDLEWARE = [
