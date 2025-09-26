@@ -1,25 +1,103 @@
-{% extends "base.html" %}
-{% load static %}
-    {% block extra_css_script %}
-    <!-- ICONS -->
-    <script
-      src="https://kit.fontawesome.com/64d58efce2.js"
-      crossorigin="anonymous"
-    ></script>
-    {% endblock %}
-
-    {% block title %}Login & Registration{% endblock %}
+{% extends "base.html" %}    
+    {% load static %}
+    {% block title %}Login & Registration{% endblock title %}
+     {% block extra_css_script %}
+      <!-- ICONS -->
+      <script src="https://kit.fontawesome.com/ff98869cdb.js" crossorigin="anonymous"></script>
+      <!-- CSS -->
+      <link rel="stylesheet" type="text/css" href="{% load static %}{% static 'styles/css/style-login.css' %}">
+      <!-- Django Messages -->
+      {% if messages %}
+        <ul class="flashes">
+          {% for message in messages %}
+          <li class="{{ message.tags }}">{{ message }}</li>
+          {% endfor %}
+        </ul>
+        {% endif %}
+        {% endblock extra_css_script %}
+        
+    
   {% block content %}
-  {% include "header.html" %}
     <div class="container">
       <div class="forms-container">
         <div class="signin-signup">
-          <form action="{% url 'login' %}" method="post" class="sign-in-form">
+
+          <!-- LOGIN FORM -->
+          <form method="POST" action="{% url 'login' %}" class="sign-in-form">
             {% csrf_token %}
-            <h2 class="title">Sign Up</h2>
-            {{ form_register.as_p }}
-            <input type="submit" value="Sign Up" class="btn">
+            <h2 class="title">Sign in</h2>
+            <input name='login' type='hidden' value="1"/>
+            <div class="input-field">
+              <i class="fas fa-user"></i>
+              {{ form_login.username }}
+            </div>
+            <div class="input-field">
+              <i class="fas fa-lock"></i>
+              {{ form_login.password }}
+            </div>
+
+            <!-- FORGOT PASSWORD -->
+            <div class='f-password'>
+                <h4 class="forgot-password"><a href="#" class="fp-link">Forgot Password?</a></h4>
+            </div>
+
+            <input type="submit" value="Login" class="btn solid" />
+
+            <p class="social-text">Or Sign in with social platforms</p>
+            <div class="social-media">
+              <a href="#" class="social-icon">
+                <i class="fab fa-facebook-f"></i>
+              </a>
+              <a href="#" class="social-icon">
+                <i class="fab fa-twitter"></i>
+              </a>
+              <a href="#" class="social-icon">
+                <i class="fab fa-google"></i>
+              </a>
+              <a href="#" class="social-icon">
+                <i class="fab fa-linkedin-in"></i>
+              </a>
+            </div>
           </form>
+          <!-- LOGIN FORM ENDS -->
+
+          <!-- REGISTRATION FORM -->
+          <form method="POST" action="{% url 'register' %}" class="sign-up-form">
+            {% csrf_token %}
+            <h2 class="title">Sign up</h2>
+            <input name='register' type='hidden' value="1"/>
+            <div class="input-field">
+              <i class="fas fa-user"></i>
+              {{ form_register.username }}
+            </div>
+            <div class="input-field">
+              <i class="fas fa-lock"></i>
+              {{ form_register.password1 }}
+            </div>
+            <div class="input-field">
+              <i class="fas fa-lock"></i>
+              {{ form_register.password2 }}
+            </div>
+            
+            <input type="submit" class="btn" value="Sign up" />
+
+            <p class="social-text">Or Sign up with social platforms</p>
+            <div class="social-media">
+              <a href="#" class="social-icon">
+                <i class="fab fa-facebook-f"></i>
+              </a>
+              <a href="#" class="social-icon">
+                <i class="fab fa-twitter"></i>
+              </a>
+              <a href="#" class="social-icon">
+                <i class="fab fa-google"></i>
+              </a>
+              <a href="#" class="social-icon">
+                <i class="fab fa-linkedin-in"></i>
+              </a>
+            </div>
+          </form>
+          <!-- REGISTRATION FORM ENDS -->
         </div>
       </div>
 
@@ -57,6 +135,6 @@
     {% block extra_js %}
     <!-- JAVASCRIPT -->
     <script src="{% static 'styles/js/login.js' %}"></script>
-    {% endblock %}
-{% include "footer.html" %}
-{% endblock %}
+    {% endblock extra_js %}
+
+  {% endblock content %}
