@@ -373,28 +373,6 @@ form.sign-in-form {
   }
 }
 
-/*FORGOT PASSWORD*/
-div.f-password{
-  float:right;
-}
-
-h4.forgot-password {
-  color: #707070;
-  font-weight: 500;
-  float: left;
-}
-
-a.fp-link{
-  color: #707070;
-  transition: .3s;
-  text-decoration: none;
-}
-
-a.fp-link:hover{
-  color: #069C54;
-}
-/*FORGOT-PASSWORD ENDS*/
-
 @media (max-width: 570px) {
   form {
     padding: 0 1.5rem;

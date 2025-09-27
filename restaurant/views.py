@@ -35,7 +35,6 @@ def table_page(request):
 def track_page(request):
     return render(request, 'track.html')
 
-
 def login_page(request):
     # Handle login from submission
     if request.method == 'POST' and 'login' in request.POST:
@@ -43,7 +42,7 @@ def login_page(request):
         if form_login.is_valid():
             login(request, form_login.get_user())
             return redirect('home')
-        messages.error(request, 'Invalid credentials.')
+        messages.error(request, f'Invalid credentials.{form_login.errors}')
     
     # Handle register
     elif request.method == 'POST' and 'register' in request.POST:
@@ -53,7 +52,8 @@ def login_page(request):
             # login user afeter sign up
             login(request, user)
             return redirect('home')
-        messages.error(request, 'Registration Failed.')
+        messages.error(request, f'Registration Failed.{form_register.errors}')
+        print(f"error: {form_register.errors}")
         
     form_login = AuthenticationForm()
     # override default login form widget attributes
@@ -70,16 +70,6 @@ def login_page(request):
                   {'form_login': form_login,
                    'form_register': form_register,
                    })
-
-def register_page(request):
-    if request.method == 'POST':
-        form = UserCreationForm(request, data=request.POST)  # combine login and sign up function
-        if form.is_valid():
-            user = form.save()
-            login(request, user)
-            return redirect('home')
-    form = UserCreationForm()
-    return render(request, "login.html", {'form_register': form})
 
 def logout_view(request):
     django_logout(request)

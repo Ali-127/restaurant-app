@@ -36,11 +36,6 @@
               {{ form_login.password }}
             </div>
 
-            <!-- FORGOT PASSWORD -->
-            <div class='f-password'>
-                <h4 class="forgot-password"><a href="#" class="fp-link">Forgot Password?</a></h4>
-            </div>
-
             <input type="submit" value="Login" class="btn solid" />
 
             <p class="social-text">Or Sign in with social platforms</p>
@@ -62,7 +57,7 @@
           <!-- LOGIN FORM ENDS -->
 
           <!-- REGISTRATION FORM -->
-          <form method="POST" action="{% url 'register' %}" class="sign-up-form">
+          <form method="POST" action="{% url 'login' %}" class="sign-up-form">
             {% csrf_token %}
             <h2 class="title">Sign up</h2>
             <input name='register' type='hidden' value="1"/>
