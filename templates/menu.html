@@ -3,11 +3,11 @@
 {% block title %}Menu{% endblock %}
 {% block content %}
 {% include "header.html" %}
-<body>
-    <!--========== SCROLL TOP ==========-->
-    <a href="#" class="scrolltop" id="scroll-top">
-        <i class='bx bx-chevron-up scrolltop__icon'></i>
-    </a>
+
+<!--========== SCROLL TOP ==========-->
+<a href="#" class="scrolltop" id="scroll-top">
+    <i class='bx bx-chevron-up scrolltop__icon'></i>
+</a>
 
 <!-- ========== MENU ==========-->
 <section class="menu section bd-container" id="menu">
@@ -22,30 +22,21 @@
 
     <!-- ========== ITEMS ==========-->
     <div class="menu__container bd-grid">
-
-        {% comment %} {% for item in items %}
+    {% for item in items %}
         <div class="menu__content">
-            <img src="{{ url_for('static', filename = 'styles/img/'+item.source) }}" alt="" class="menu__img">
+            <img src="{% static "food.png" %}" alt="{{ item.name }}" class="menu__img">
             <h3 class="menu__name">{{ item.name }}</h3>
             <span class = "menu_detail"> {{ item.description }} </span>
-            <span class="menu__price">₹{{ item.price }}</span>
-            <form method = 'POST'>
-                {{ add_form.hidden_tag() }}
-                <input id="selected_item" name="selected_item" type="hidden" value="{{ item.name }}">
-                {{ add_form.submit(class = 'button menu__button') }}
-            </form> {% endcomment %}
-            <div class="menu__content">
-                <p>Not implmented yet.</p>
-            </div>
-
+            <span class="menu__price">${{ item.price }}</span>
+            <form method="POST" action="{% url 'menu' %}">
+                {% csrf_token %}
+                <input id="selected_item" name="selected_item" type="hidden" value="{{ item.id }}">
+                <input type="submit" value="Add" class="button menu__button">
+            </form>
         </div>
-        {% comment %} {% endfor %} {% endcomment %}
-
+    {% endfor %}
     </div>
 </section>
 <!-- ========== MENU ENDS ==========-->
-
-</body>
-</html>
 {% include "footer.html" %}
 {% endblock %}

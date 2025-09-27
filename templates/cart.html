@@ -11,32 +11,46 @@
 	<a href="{% url 'menu' %}" class = "back"><h5 class="Action">Back to Menu <i class='bx bxs-food-menu'></i></h5></a>
 	</div>
 
-	{% comment %} {% for selected_item in selected_items %} {% endcomment %}
+	{% for cart_item in cart_items %}
 	<div class="Cart-Items">
-		
 		<div class="image-box">
-		{% comment %} <img src="{{ url_for('static', filename = 'styles/img/'+selected_item.source) }}" alt="" class="menu__img"> {% endcomment %}
-		Not implemented yet.
+		<img src="{% static 'food.png' %}" alt="" class="menu__img">
 		</div>
-
 		<div class="about">
-		{% comment %} <h1 class="title"> {{ selected_item.name }}</h1>
-		<h3 class="subtitle"> {{ selected_item.description }} </h3> {% endcomment %}
+		<h1 class="title"> {{ cart_item.item.name }}</h1>
+		<h3 class="subtitle"> {{ cart_item.item.description }} </h3>
 		</div>
-
 		<div class="counter">
-		<div class="btn">+</div>
-		<div class="count">1</div>
-		<div class="btn">-</div>
+		<!--increase button-->
+		<form method="POST" action={% url 'cart' %}>
+			{% csrf_token %}
+			<input type="hidden" name="item_id" value={{ cart_item.item.id }}>
+			<input type="hidden" name="action" value='increase'>
+			<button type="submit" class='btn'>+</button>
+		</form>
+		<div class="count">{{ cart_item.quantity }}</div>
+		<!--decrease button-->
+		<form method="POST" action={% url 'cart' %}>
+			{% csrf_token %}
+			<input type="hidden" name="item_id" value={{ cart_item.item.id }}>
+			<input type="hidden" name="action" value='decrease'>
+			<button type="submit" class='btn'>-</button>
+		</form>
 		</div>
 
 		<div class="prices">
-		{% comment %} <div class="amount">₹ {{ selected_item.price }}</div> {% endcomment %}
-		<div class="remove"><i class='bx bxs-trash-alt'></i></div> 
+		<div class="amount">${{ cart_item.item.price }}</div>
+		<!--Remove button-->
+		<form method="POST" action={% url 'cart' %}>
+			{% csrf_token %}
+			<input type="hidden" name="item_id" value={{ cart_item.item.id }}>
+			<input type="hidden" name="action" value='remove'>
+			<button type="submit" class='remove'><i class='bx bxs-trash-alt'></i></button>
+		</form>
 		</div>
 	
 	</div>
-	{% comment %} {% endfor %} {% endcomment %}
+	{% endfor %}
 
 	<!-- <hr> -->
 	<div class="checkout">
@@ -45,16 +59,12 @@
 				<div class="Subtotal">Sub-Total</div>
 				<div class="items"> X items</div>
 			</div>
-			{% comment %} <div class="total-amount">₹ {{ selected_items | sum(attribute='price') }}</div> {% endcomment %}
+			<div class="total-amount">${{ total }}</div>
 		</div>
-		<form method = 'POST'>
-			<!-- Note: This part seems useless -->
-			{% comment %} {{ order_form.hidden_tag() }} {% endcomment %}
-			{% comment %} {% for selected_item in selected_items %} {% endcomment %}
-			{% comment %} <input id="ordered_item" name="ordered_item" type="hidden" value="{{ selected_item.name }}"> {% endcomment %}
-			{% comment %} {% endfor %} {% endcomment %}
-			{% comment %} {{ order_form.submit(class = 'button') }} {% endcomment %}
-			not implemented yet.
+		<!--Submit form-->
+		<form method='POST', action={% url 'cart' %}>
+			{% csrf_token %}
+			<input type="submit" value="Order Now" class="button">
 		</form>
 	</div>
 </div>
