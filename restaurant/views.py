@@ -1,4 +1,3 @@
-from re import search
 from django.shortcuts import render, redirect
 from django.contrib import messages
 from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
@@ -132,13 +131,33 @@ def place_order(request):
     
     return redirect('cart')
 
+
+@login_required
+def track_page(request):
+    # Get user's orders newest first
+    orders = Order.objects.filter(user=request.user).order_by('-created_at')
+    
+    order_details = []
+    for order in orders:
+        items = OrderItem.objects.filter(order=order)
+        order_details.append({
+            'order': order,
+            'items': items,
+            'item_quantity': sum(item.quantity for item in items)
+        })
+    
+    return render(request, 'track.html', {'order_details': order_details})
+
+
 def login_page(request):
+    next_url = request.POST.get('next') or request.GET.get('next') or 'home'
     # Handle login from submission
     if request.method == 'POST' and 'login' in request.POST:
         form_login = AuthenticationForm(request, data=request.POST)
         if form_login.is_valid():
             login(request, form_login.get_user())
-            return redirect('home')
+            print(next_url)
+            return redirect(next_url)
         messages.error(request, f'Invalid credentials.{form_login.errors}')
     
     # Handle register
@@ -148,7 +167,7 @@ def login_page(request):
             user = form_register.save()
             # login user afeter sign up
             login(request, user)
-            return redirect('home')
+            return redirect(next_url)
         messages.error(request, f'Registration Failed.{form_register.errors}')
         print(f"error: {form_register.errors}")
         
@@ -181,8 +200,6 @@ def otp_page(request):
 def table_page(request):
     return render(request, 'table.html')
 
-def track_page(request):
-    return render(request, 'track.html')
 
 def reservations_page(request):
     return render(request, 'table.html')

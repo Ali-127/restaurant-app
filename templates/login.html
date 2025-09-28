@@ -26,6 +26,9 @@
           <form method="POST" action="{% url 'login' %}" class="sign-in-form">
             {% csrf_token %}
             <h2 class="title">Sign in</h2>
+            {% if request.GET.next %}
+                <input type="hidden" name="next" value="{{ request.GET.next }}">
+            {% endif %}
             <input name='login' type='hidden' value="1"/>
             <div class="input-field">
               <i class="fas fa-user"></i>

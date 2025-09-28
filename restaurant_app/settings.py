@@ -134,3 +134,5 @@ CORS_ALLOWED_ORIGINS = [
     "http://localhost:3000",  # Your frontend development server
     "http://127.0.0.1:3000",
 ]
+
+LOGIN_URL = '/login/'
