@@ -12,6 +12,48 @@ from .models import Menu, MenuItem, Order, OrderItem
 def home_page(request):
     return render(request, 'index.html')
 
+def login_page(request):
+    next_url = request.POST.get('next') or request.GET.get('next') or 'home'
+    # Handle login from submission
+    if request.method == 'POST' and 'login' in request.POST:
+        form_login = AuthenticationForm(request, data=request.POST)
+        if form_login.is_valid():
+            login(request, form_login.get_user())
+            print(next_url)
+            return redirect(next_url)
+        messages.error(request, f'Invalid credentials.{form_login.errors}')
+    
+    # Handle register
+    elif request.method == 'POST' and 'register' in request.POST:
+        form_register = UserCreationForm(request.POST)
+        if form_register.is_valid():
+            user = form_register.save()
+            # login user afeter sign up
+            login(request, user)
+            return redirect(next_url)
+        messages.error(request, f'Registration Failed.{form_register.errors}')
+        print(f"error: {form_register.errors}")
+        
+    form_login = AuthenticationForm()
+    # override default login form widget attributes
+    form_login.fields['username'].widget.attrs.update({'placeholder': 'Username'})
+    form_login.fields['password'].widget.attrs.update({'placeholder': 'Password'})
+    
+    form_register = UserCreationForm()
+    # override default register form widget attributes
+    form_register.fields['username'].widget.attrs.update({'placeholder': 'Username'})
+    form_register.fields['password1'].widget.attrs.update({'placeholder': 'Password'})
+    form_register.fields['password2'].widget.attrs.update({'placeholder': 'Confirm Password'})
+    
+    return render(request, 'login.html',
+                  {'form_login': form_login,
+                   'form_register': form_register,
+                   })
+
+def logout_view(request):
+    django_logout(request)
+    return redirect('home')
+
 
 def menu_page(request):
     # handle search field queries
@@ -115,6 +157,7 @@ def place_order(request):
             total_amount=total
         )
         
+        # create order items using cart info
         for item_data in order_items_data:
             OrderItem.objects.create(
                 order=order,
@@ -149,56 +192,15 @@ def track_page(request):
     return render(request, 'track.html', {'order_details': order_details})
 
 
-def login_page(request):
-    next_url = request.POST.get('next') or request.GET.get('next') or 'home'
-    # Handle login from submission
-    if request.method == 'POST' and 'login' in request.POST:
-        form_login = AuthenticationForm(request, data=request.POST)
-        if form_login.is_valid():
-            login(request, form_login.get_user())
-            print(next_url)
-            return redirect(next_url)
-        messages.error(request, f'Invalid credentials.{form_login.errors}')
-    
-    # Handle register
-    elif request.method == 'POST' and 'register' in request.POST:
-        form_register = UserCreationForm(request.POST)
-        if form_register.is_valid():
-            user = form_register.save()
-            # login user afeter sign up
-            login(request, user)
-            return redirect(next_url)
-        messages.error(request, f'Registration Failed.{form_register.errors}')
-        print(f"error: {form_register.errors}")
-        
-    form_login = AuthenticationForm()
-    # override default login form widget attributes
-    form_login.fields['username'].widget.attrs.update({'placeholder': 'Username'})
-    form_login.fields['password'].widget.attrs.update({'placeholder': 'Password'})
-    
-    form_register = UserCreationForm()
-    # override default register form widget attributes
-    form_register.fields['username'].widget.attrs.update({'placeholder': 'Username'})
-    form_register.fields['password1'].widget.attrs.update({'placeholder': 'Password'})
-    form_register.fields['password2'].widget.attrs.update({'placeholder': 'Confirm Password'})
-    
-    return render(request, 'login.html',
-                  {'form_login': form_login,
-                   'form_register': form_register,
-                   })
+def table_page(request):
+    return render(request, 'table.html')
 
-def logout_view(request):
-    django_logout(request)
-    return redirect('home')
 
 def order_id_page(request):
     return render(request, 'order-id.html')
 
 def otp_page(request):
     return render(request, 'otp.html')
-
-def table_page(request):
-    return render(request, 'table.html')
 
 
 def reservations_page(request):

@@ -64,12 +64,7 @@
 		<!--Submit form-->
 		<form method='POST', action={% url 'place_order' %}>
 			{% csrf_token %}
-			{% if user.is_authenticated %}
-				<input type="submit" value="Order Now" class="button">
-			{% else %}
-				<input type="submit" value="Order Now" class="button" style="background: grey; cursor: default;" disabled>
-				<p>Please <a href="{% url 'login' %}">login</a> to place your order.</p>
-			{% endif %}
+			<input type="submit" value="Order Now" class="button">
 		</form>
 	</div>
 	{% else %}
