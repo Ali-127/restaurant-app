@@ -200,6 +200,7 @@ hr{
 	/* color: #202020; */
 	color: #FFF;
 	margin-bottom: 15px;
+	line-height: 1;
 }
 
 .button:hover{

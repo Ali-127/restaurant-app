@@ -20,14 +20,14 @@
 <polyline class="tick path" style="fill:none;stroke:#fff;stroke-width:3;stroke-linejoin:round;stroke-miterlimit:10;" points="
     11.6,20 15.9,24.2 26.4,13.8 "/>
 </svg>
-            </div>
+    </div>
 
         <div class="text">
-        <p>You order has been placed successfully.
-        <br>Order-ID: 20210001
-        <br><a href="{% url 'track' %}" class = ""><button class ="button"><h5 class="link">Track Order</h5></button></a> 
-        <a href="{% url 'home' %}" class = ""><button class ="button"><h5 class="link">Return Home</h5></button></a>
-        </p>
+            <p>You order has been placed successfully.
+            <br>Order-ID: {{ order_id }}
+            <br><a href="{% url 'track' %}" class = ""><button class ="button"><h5 class="link">Track Order</h5></button></a> 
+            <a href="{% url 'home' %}" class = ""><button class ="button"><h5 class="link">Return Home</h5></button></a>
+            </p>
         </div>
 
     </div>

@@ -53,19 +53,27 @@
 	{% endfor %}
 
 	<!-- <hr> -->
+	{% if cart_items %}
 	<div class="checkout">
 		<div class="total">
 			<div>
-				<div class="Subtotal">Sub-Total</div>
-				<div class="items"> X items</div>
+				<div class="Subtotal">Total:</div>
 			</div>
 			<div class="total-amount">${{ total }}</div>
 		</div>
 		<!--Submit form-->
-		<form method='POST', action={% url 'cart' %}>
+		<form method='POST', action={% url 'place_order' %}>
 			{% csrf_token %}
-			<input type="submit" value="Order Now" class="button">
+			{% if user.is_authenticated %}
+				<input type="submit" value="Order Now" class="button">
+			{% else %}
+				<input type="submit" value="Order Now" class="button" style="background: grey; cursor: default;" disabled>
+				<p>Please <a href="{% url 'login' %}">login</a> to place your order.</p>
+			{% endif %}
 		</form>
 	</div>
+	{% else %}
+		<p class="title" style="text-align: center">Your cart is empty!</p>
+	{% endif %}
 </div>
 {% endblock content %}

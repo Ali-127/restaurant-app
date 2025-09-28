@@ -1,10 +1,13 @@
+from re import search
 from django.shortcuts import render, redirect
 from django.contrib import messages
 from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
+from django.contrib.auth.decorators import login_required
 from django.contrib.auth import login, logout as django_logout
-
+import random
+import string
 from restaurant.forms import AddForm, OrderForm
-from .models import Menu, MenuItem
+from .models import Menu, MenuItem, Order, OrderItem
 
 # Create your views here.
 def home_page(request):
@@ -12,6 +15,17 @@ def home_page(request):
 
 
 def menu_page(request):
+    # handle search field queries
+    search_query = request.GET.get('search', '')
+    if search_query:
+        items = MenuItem.objects.filter(
+            name__icontains=search_query,
+            is_available=True
+        )
+    # Get all available items from database
+    else:
+        items = MenuItem.objects.filter(is_available=True)
+        
     if request.method == "POST":
         item_id = request.POST.get('selected_item')
         
@@ -19,14 +33,11 @@ def menu_page(request):
         cart = request.session.get('cart', {})
         cart[item_id] = cart.get(item_id, 0) + 1
         request.session['cart'] = cart
-        print(cart)
-    # Get all available items from database
-    items = MenuItem.objects.filter(is_available=True)
     
     # Add to cart form
     add_form = AddForm() 
     
-    return render(request, 'menu.html', {"items": items, "add_form": add_form})
+    return render(request, 'menu.html', {"items": items, "add_form": add_form, "search_query": search_query})
 
 def cart_page(request):
     #  Handle increase and decrease buttons in cart page
@@ -38,7 +49,6 @@ def cart_page(request):
         if action == "increase":
             # get item from session
             cart[item_id] = cart.get(item_id, 0) + 1
-            print(cart)
         elif action == "decrease":
             if item_id in cart:
                 cart[item_id] -= 1
@@ -75,6 +85,52 @@ def cart_page(request):
         'order_form': order_form
     })
 
+@login_required
+def place_order(request):
+    if request.method == "POST":
+        cart = request.session.get("cart", {})
+        
+        if not cart:
+            messages.error(request, "Your cart is empty.")
+            return redirect('cart')
+        
+        total = 0
+        order_items_data = []
+        
+        for item_id, quantity in cart.items():
+            menu_item = MenuItem.objects.get(id=item_id)
+            subtotal = menu_item.price * quantity
+            total += subtotal
+            
+            order_items_data.append({
+                'menu_item': menu_item,
+                'quantity': quantity,
+                'price': menu_item.price
+            })
+        
+        #  Generate a random order-id for order
+        order_id = ''.join(random.choices(string.ascii_uppercase + string.digits, k=8))
+        order = Order.objects.create(
+            user=request.user,
+            order_id=order_id,
+            total_amount=total
+        )
+        
+        for item_data in order_items_data:
+            OrderItem.objects.create(
+                order=order,
+                menu_item=item_data['menu_item'],
+                quantity=item_data['quantity'],
+                price=item_data['price']
+            )
+            
+        # Clear cart
+        request.session['cart'] = {}
+        
+        messages.success(request, f"Order placed successfully! Order ID: {order_id}")
+        return render(request, 'congrats.html', {'order_id': order_id})
+    
+    return redirect('cart')
 
 def login_page(request):
     # Handle login from submission

@@ -15,13 +15,16 @@
 
     <!-- SEARCH BOX -->
     <div class="search-box">
-        <button class="btn-search"><i class='bx bxs-search'></i></button>
-        <input type="text" class="input-search" placeholder="Search..">
+        <form action="{% url 'menu' %}" method="GET">
+            <button class="btn-search" type="submit"><i class='bx bxs-search'></i></button>
+            <input type="text" class="input-search" name='search' placeholder="Search.." value="{{ search_query }}">
+        </form>
       </div>
     <!-- SEARCH BOX ENDS -->
 
     <!-- ========== ITEMS ==========-->
     <div class="menu__container bd-grid">
+    {% if items %}
     {% for item in items %}
         <div class="menu__content">
             <img src="{% static "food.png" %}" alt="{{ item.name }}" class="menu__img">
@@ -35,7 +38,11 @@
             </form>
         </div>
     {% endfor %}
+    {% else %}
+        <p>Nothing to show here...</p>
+    {% endif %}
     </div>
+    
 </section>
 <!-- ========== MENU ENDS ==========-->
 {% include "footer.html" %}
