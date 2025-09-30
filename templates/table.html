@@ -27,25 +27,28 @@
     </thead>
     
     <tbody>
-    {% comment %} {% for table in tables %}
+    {% for slot in slots %}
         <tr>
-            <td>{{ table.table }}</td>
-            <td>{{ table.time }}</td>
-            <td>{{ table.date }}</td>
-            <td>{{ table.accomodation }}</td>
+            <td>{{ slot.table }}</td>
+            <td>{{ slot.time|time:"H:i" }}</td>
+            <td>{{ slot.date }}</td>
+            <td>{{ slot.accommodation }}</td>
             <td>
-                <!-- <a href ='#' class = 'button'>Reserve</a> -->
-                <form method = 'POST'>
-                    {{ reserve_form.hidden_tag() }}
-                    <input id="reserved_table" name="reserved_table" type="hidden" value="{{ table.table }}">
-                    {{ reserve_form.submit(class = 'button') }}
+                <form method='POST' action="{% url 'reserve' %}">
+                    {% csrf_token %}
+                    <input name="date" type="hidden" value="{{ slot.date|date:"Y-m-d" }}">
+                    <input name="time" type="hidden" value="{{ slot.time|time:"H:i" }}">
+                    {% if slot.is_user_reservation %}
+                        <input class='button' type="submit" value="Reserved for you" disabled>
+                    {% elif slot.is_reserved %}
+                        <input class='button' type="submit" value="Reserved" disabled>
+                    {% else %}
+                        <input class='button' type="submit" value="Reserve">
+                    {% endif %}
                 </form>
             </td>
         </tr>
-    {% endfor %} {% endcomment %}
-    <tr>
-        <td>Not implmented yet.</td>
-    </tr>
+    {% endfor %}
     </tbody>
 </table>
 <!-- TABLE ENDS -->

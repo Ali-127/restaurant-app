@@ -19,7 +19,6 @@ def login_page(request):
         form_login = AuthenticationForm(request, data=request.POST)
         if form_login.is_valid():
             login(request, form_login.get_user())
-            print(next_url)
             return redirect(next_url)
         messages.error(request, f'Invalid credentials.{form_login.errors}')
     
@@ -32,7 +31,6 @@ def login_page(request):
             login(request, user)
             return redirect(next_url)
         messages.error(request, f'Registration Failed.{form_register.errors}')
-        print(f"error: {form_register.errors}")
         
     form_login = AuthenticationForm()
     # override default login form widget attributes
@@ -195,19 +193,3 @@ def track_page(request):
 def table_page(request):
     return render(request, 'table.html')
 
-
-def order_id_page(request):
-    return render(request, 'order-id.html')
-
-def otp_page(request):
-    return render(request, 'otp.html')
-
-
-def reservations_page(request):
-    return render(request, 'table.html')
-
-def delivery_page(request):
-    return render(request, 'track.html')
-
-def congrats_page(request):
-    return render(request, 'congrats.html')
