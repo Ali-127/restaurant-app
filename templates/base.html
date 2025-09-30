@@ -15,6 +15,27 @@
         <title>{% block title %}{% endblock %}</title>
     </head>
     <body>
+        {% if messages %}
+            <div class="messages-container">
+                {% for message in messages %}
+                    <div class="message-card message-{{ message.tags }}">
+                        <div class="message-icon">
+                            {% if message.tags == 'success' %}
+                                ✓
+                            {% elif message.tags == 'error' %}
+                                ✕
+                            {% else %}
+                                ℹ
+                            {% endif %}
+                        </div>
+                        <div class="message-content">
+                            {{ message }}
+                        </div>
+                        <button class="message-close" onclick="this.parentElement.remove()">×</button>
+                    </div>
+                {% endfor %}
+            </div>
+        {% endif %}
         {% block content %}
         {% endblock %}
         <!--========== SCROLL REVEAL ==========-->

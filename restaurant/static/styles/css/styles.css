@@ -759,3 +759,82 @@ tr:hover {
     text-align: center;
     padding: 50px;
 }
+/* Container holds stacked message cards */
+.messages-container {
+  position: fixed;
+  top: 1rem;
+  right: 1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  z-index: 9999;
+}
+
+/* Base card style */
+.message-card {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  min-width: 280px;
+  max-width: 360px;
+  padding: 0.75rem 1rem;
+  border-radius: 0.75rem;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+  font-family: system-ui, sans-serif;
+  font-size: 0.95rem;
+  font-weight: 500;
+  color: #fff;
+  animation: slideIn 0.3s ease-out;
+  position: relative;
+}
+
+/* Accent colors */
+.message-success {
+  background: #22c55e; /* green */
+}
+.message-error {
+  background: #ef4444; /* red */
+}
+.message-info {
+  background: #3b82f6; /* blue */
+}
+
+/* Icon styling */
+.message-icon {
+  font-size: 1.25rem;
+  flex-shrink: 0;
+  opacity: 0.9;
+}
+
+/* Content */
+.message-content {
+  flex: 1;
+  line-height: 1.4;
+}
+
+/* Close button */
+.message-close {
+  background: transparent;
+  border: none;
+  font-size: 1.25rem;
+  color: inherit;
+  cursor: pointer;
+  opacity: 0.8;
+  transition: opacity 0.2s;
+}
+.message-close:hover {
+  opacity: 1;
+}
+
+/* Slide-in animation */
+@keyframes slideIn {
+  from {
+    transform: translateX(100%);
+    opacity: 0;
+  }
+  to {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+

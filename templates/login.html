@@ -6,15 +6,7 @@
       <script src="https://kit.fontawesome.com/ff98869cdb.js" crossorigin="anonymous"></script>
       <!-- CSS -->
       <link rel="stylesheet" type="text/css" href="{% load static %}{% static 'styles/css/style-login.css' %}">
-      <!-- Django Messages -->
-      {% if messages %}
-        <ul class="flashes">
-          {% for message in messages %}
-          <li class="{{ message.tags }}">{{ message }}</li>
-          {% endfor %}
-        </ul>
-        {% endif %}
-        {% endblock extra_css_script %}
+      {% endblock extra_css_script %}
         
     
   {% block content %}

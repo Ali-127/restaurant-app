@@ -6,7 +6,7 @@ from django.contrib.auth import login, logout as django_logout
 import random
 import string
 from restaurant.forms import AddForm, OrderForm
-from .models import Menu, MenuItem, Order, OrderItem
+from .models import MenuItem, Order, OrderItem
 
 # Create your views here.
 def home_page(request):
@@ -19,8 +19,11 @@ def login_page(request):
         form_login = AuthenticationForm(request, data=request.POST)
         if form_login.is_valid():
             login(request, form_login.get_user())
+            messages.success(request, f"Welcome {request.user.username}")
             return redirect(next_url)
-        messages.error(request, f'Invalid credentials.{form_login.errors}')
+        for field, errors in form_login.errors.items():
+                    for error in errors:
+                        messages.error(request, error)
     
     # Handle register
     elif request.method == 'POST' and 'register' in request.POST:
@@ -29,8 +32,13 @@ def login_page(request):
             user = form_register.save()
             # login user afeter sign up
             login(request, user)
+            messages.success(request, f"Logged in as {user.username}")
             return redirect(next_url)
-        messages.error(request, f'Registration Failed.{form_register.errors}')
+        
+        if form_register.errors:
+                for field, errors in form_register.errors.items():
+                    for error in errors:
+                        messages.error(request, error)
         
     form_login = AuthenticationForm()
     # override default login form widget attributes
@@ -50,6 +58,7 @@ def login_page(request):
 
 def logout_view(request):
     django_logout(request)
+    messages.info(request, "Logged out.")
     return redirect('home')
 
 
@@ -188,8 +197,4 @@ def track_page(request):
         })
     
     return render(request, 'track.html', {'order_details': order_details})
-
-
-def table_page(request):
-    return render(request, 'table.html')
 
