@@ -838,3 +838,14 @@ tr:hover {
   }
 }
 
+.delete-btn {
+    background-color: #dc3545 !important;
+    color: white;
+}
+
+.user_reserved {
+  background-color: #68ffb7;
+}
+.reserved {
+  background-color: #ff9393;
+}

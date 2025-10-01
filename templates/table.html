@@ -28,23 +28,41 @@
     
     <tbody>
     {% for slot in slots %}
-        <tr>
+    {% if slot.is_user_reservation %}
+        <tr class="user_reserved">
+    {% elif slot.is_reserved %}
+        <tr class="reserved">
+    {% else %}
+            <tr>
+    {% endif %}
             <td>{{ slot.table }}</td>
             <td>{{ slot.time|time:"H:i" }}</td>
             <td>{{ slot.date }}</td>
             <td>{{ slot.accommodation }}</td>
             <td>
-                <form method='POST' action="{% url 'reserve' %}">
-                    {% csrf_token %}
-                    <input name="date" type="hidden" value="{{ slot.date|date:"Y-m-d" }}">
-                    <input name="time" type="hidden" value="{{ slot.time|time:"H:i" }}">
-                    {% if slot.is_user_reservation %}
-                        <input class='button' type="submit" value="Reserved for you" disabled>
-                    {% elif slot.is_reserved %}
-                        <input class='button' type="submit" value="Reserved" disabled>
-                    {% else %}
-                        <input class='button' type="submit" value="Reserve">
-                    {% endif %}
+                {% if slot.is_user_reservation %}
+                    <div class="reservation-buttons">
+                        <form method="POST" action="{% url 'cancel_reservation' %}" class="delete-form">
+                            {% csrf_token %}
+                            <input name="date" type="hidden" value="{{ slot.date|date:'Y-m-d' }}">
+                            <input name="time" type="hidden" value="{{ slot.time|time:'H:i' }}">
+                            <button type="submit" class="button delete-btn" onclick="return confirm('Cancel this reservation?')">Cancel</button>
+                        </form>
+                    </div>
+                {% elif slot.is_reserved %}
+                    <form method="POST" action="{% url 'reserve' %}">
+                        {% csrf_token %}
+                        <input name="date" type="hidden" value="{{ slot.date|date:'Y-m-d' }}">
+                        <input name="time" type="hidden" value="{{ slot.time|time:'H:i' }}">
+                    </form>
+                {% else %}
+                    <form method="POST" action="{% url 'reserve' %}">
+                        {% csrf_token %}
+                        <input name="date" type="hidden" value="{{ slot.date|date:'Y-m-d' }}">
+                        <input name="time" type="hidden" value="{{ slot.time|time:'H:i' }}">
+                        <input class="button" type="submit" value="Reserve">
+                    </form>
+                {% endif %}
                 </form>
             </td>
         </tr>

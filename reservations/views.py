@@ -78,3 +78,27 @@ def reserve_slot(request):
             messages.error(request, f"Reservation failed. {e}")
             
     return redirect('table')
+
+def cancel_reservation(request):
+    if request.method == "POST":
+        date_str = request.POST.get('date')
+        time_str = request.POST.get('time')
+        
+        try:
+            reservation_date = datetime.strptime(date_str, '%Y-%m-%d').date()
+            reservation_time = datetime.strptime(time_str, '%H:%M').time()
+            
+            reservation = Reservation.objects.get(
+                user=request.user,
+                date=reservation_date,
+                time=reservation_time
+            )
+            
+            reservation.delete()
+            messages.success(request, 'Reservation cancelled successfully!')
+        except Reservation.DoesNotExist:
+            messages.error(request, "Reservation not found.")
+        except Exception as e:
+            messages.error(request, "Failed to cancell reservation.")
+            
+    return redirect('table')
