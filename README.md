@@ -205,21 +205,28 @@ Ali - [alimehdizadeh127@gmail.com](mailto:alimehdizadeh127@gmail.com)
 Project Link: [https://github.com/Ali-127/restaurant-web-app](https://github.com/Ali-127/restaurant-web-app)
 
 ## 📸 Screenshots
-## Home page
+### Home page
 <img width="1366" height="635" alt="Screenshot 2025-10-05 at 10-58-40 SilverLeaf" src="https://github.com/user-attachments/assets/0c5194f6-4620-422e-81ed-83c7e660a230" />
-## Log in Page
+
+### Log in Page
 <img width="1366" height="635" alt="Screenshot 2025-10-05 at 10-58-53 Login   Registration" src="https://github.com/user-attachments/assets/5bacf502-50a6-4291-aed7-730a76723516" />
-## Sign in Page
+
+### Sign in Page
 <img width="1366" height="635" alt="Screenshot 2025-10-05 at 10-59-04 Login   Registration" src="https://github.com/user-attachments/assets/03c86069-c7f8-4c4e-8c0b-797ec3a41fcf" />
-## Menu
+
+### Menu
 <img width="1366" height="635" alt="Screenshot 2025-10-05 at 11-00-15 Menu" src="https://github.com/user-attachments/assets/e921dd2e-6a8e-4274-a223-0b6f6858328d" />
-## Table Reservation
+
+### Table Reservation
 <img width="1366" height="635" alt="Screenshot 2025-10-05 at 11-01-21 Table Reservation" src="https://github.com/user-attachments/assets/4c266b4f-ca75-4965-986b-79dc6dae23c1" />
-## Services
+
+### Services
 <img width="1366" height="635" alt="Screenshot 2025-10-05 at 11-01-32 SilverLeaf" src="https://github.com/user-attachments/assets/5cbfd56d-6810-4abf-94d8-60a84ebcb1db" />
-## Cart
+
+### Cart
 <img width="1366" height="768" alt="143269901-21b84d5e-81d3-4ed8-a6be-42692c0ccc58" src="https://github.com/user-attachments/assets/8e36a6f5-409b-438d-b63c-9f194a17fc4e" />
-## OrderConfirmation
+
+### OrderConfirmation
 <img width="1366" height="768" alt="143270441-cb669f88-6d49-4f95-8540-5e5d7d1444f9" src="https://github.com/user-attachments/assets/fb6cdf6d-dcba-4a04-842c-c156b060a7a4" />
 
 ---
